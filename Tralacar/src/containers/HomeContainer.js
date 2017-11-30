@@ -18,12 +18,21 @@ class HomeContainer extends Component {
     }
 
     render() {
-        return (
-            
-            <View style={styles.view}>
-                <Text style={{color: 'white'}}>Welcome home!</Text>
-            </View>
-        );
+        if (this.props.driverMode) {
+            return (
+                
+                <View style={styles.view}>
+                    <Text style={{color: 'white'}}>Driver mode enabled</Text>
+                </View>
+            );
+        } else {
+            return (
+                
+                <View style={styles.view}>
+                    <Text style={{color: 'white'}}>Driver mode disabled</Text>
+                </View>
+            ); 
+        }
     }
 
 }
@@ -39,7 +48,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
+    // console.log("Home container state is ", state);
+    const { driverMode } = state.settingsReducer;
     return {
+        driverMode
     };
   }
 

@@ -5,7 +5,7 @@ import { List, ListItem } from "react-native-elements";
 
 
 const SettingsList = ({switched, onSwitch, thumbColor, openMapSelector, subtitles}) => {
-    console.log("Subtitles are ", subtitles);
+    // console.log("Subtitles are ", subtitles);
     return (
     <List
         containerStyle={styles.listContainer}>

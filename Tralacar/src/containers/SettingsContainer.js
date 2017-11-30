@@ -8,18 +8,13 @@ import {
 import {connect} from 'react-redux';
 
 import SettingsList from '../components/SettingsList';
+import * as settingsActions from '../actions/settingsActions';
 
 class SettingsContainer extends Component {
     
     constructor(props) {
         super(props);
-        // console.log("Props are ", props);
-        // let settings = props.settings;
-        this.state = {
-            ...props.settings,
-            thumbColor: '#ffffff'
-        };
-        // console.log("State is ", this.state);
+        
         this.toggleDriverMode = this.toggleDriverMode.bind(this);
         this.onMapSelect = this.onMapSelect.bind(this);
     }
@@ -29,16 +24,15 @@ class SettingsContainer extends Component {
     }
 
     toggleDriverMode() {
-        var newThumbColor = !this.state.driverMode ? '#1fdd55' : '#ffffff'; 
-        this.setState({driverMode: !this.state.driverMode, thumbColor: newThumbColor});
+        this.props.dispatch(settingsActions.toggleDriverMode());
     }
 
     onMapSelect(title) {
         var coords;
         if (title.includes('start')) {
-            coords = this.state.startPoint;
+            coords = this.props.startPoint;
         } else {
-            coords = this.state.endPoint;
+            coords = this.props.endPoint;
         }
         this.props.navigator.showModal({
             screen: 'MapSelectContainer',
@@ -61,11 +55,11 @@ class SettingsContainer extends Component {
                 <View
                     style={{paddingBottom: 20}}>
                     <SettingsList
-                        switched={this.state.driverMode}
+                        switched={this.props.driverMode}
                         onSwitch={this.toggleDriverMode}
-                        thumbColor={this.state.thumbColor}
+                        thumbColor={this.props.thumbColor}
                         openMapSelector={this.onMapSelect}
-                        subtitles={{start: this.state.startPoint, end: this.state.endPoint}}>
+                        subtitles={{start: this.props.startPoint, end: this.props.endPoint}}>
                     </SettingsList>
                 </View>
             </View>
@@ -84,9 +78,19 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
+    // console.log("the state is ", state);
+    const {
+        driverMode,
+        startPoint,
+        endPoint,
+        thumbColor
+    } = state.settingsReducer;
     return {
-        settings: state.settingsReducer
-    };
+        driverMode,
+        startPoint,
+        endPoint,
+        thumbColor
+    }
   }
 
 export default connect(mapStateToProps)(SettingsContainer);

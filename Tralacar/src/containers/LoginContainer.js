@@ -5,9 +5,10 @@ import {
     Image
   } from 'react-native';
 import {connect} from 'react-redux';
+// import {LoginButton, AccessToken} from 'react-native-fbsdk';
 
 import LoginButton from '../components/LoginButton';
-import * as loginActions from '../actions/loginActions'
+import * as loginActions from '../actions/loginActions';
 
 const gif = '../assets/login_background.gif';
 
@@ -35,6 +36,26 @@ class LoginContainer extends Component {
                     style={{width: '100%',resizeMode: resizeMode }}
                     source={ require('./../assets/login_background.gif') }
                 />
+                {/* <View>
+        <LoginButton
+        //   publishPermissions={[]}
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                alert("login has error: " + result.error);
+              } else if (result.isCancelled) {
+                alert("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    alert(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => alert("logout.")}/>
+      </View> */}
                 <View
                     style={styles.button}>
                     <LoginButton 

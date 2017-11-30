@@ -10,6 +10,8 @@ import {
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 
+import * as mapActions from '../actions/mapActions';
+
 const { width, height } = Dimensions.get('window');
 
 
@@ -22,7 +24,7 @@ class MapSelectContainer extends Component {
         if (props.title.includes('start')) {
             this.updateCoord = this.updateCoord_Start.bind(this);
         } else {
-            this.updateCoord = this.updateCoord_Start.bind(this);
+            this.updateCoord = this.updateCoord_End.bind(this);
         }
         var ASPECT_RATIO = width / height;
         var LATITUDE = props.coords.lat;
@@ -50,15 +52,25 @@ class MapSelectContainer extends Component {
     closeMapSelect() {
         this.props.navigator.dismissModal({
             animationType: 'slide-down'
-        })
+        });
     }
 
     updateCoord_Start() {
         console.log("updating start coord");
+        this.props.dispatch(mapActions.updateStartPoint({lat: this.state.region.latitude, 
+                                                         long: this.state.region.longitude}));
+        this.props.navigator.dismissModal({
+            animationType: 'slide-down'
+        });
     }
 
     updateCoord_End() {
         console.log("updating end coord");
+        this.props.dispatch(mapActions.updateEndPoint({lat: this.state.region.latitude, 
+                                                         long: this.state.region.longitude}));
+        this.props.navigator.dismissModal({
+            animationType: 'slide-down'
+        });
     }
 
     onRegionChange(region) {
