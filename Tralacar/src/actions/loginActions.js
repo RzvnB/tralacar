@@ -1,4 +1,4 @@
-import * as types from './actionTypes';
+import { ROOT_CHANGED } from './actionTypes';
 
 export function appInitialized() {
     return async function(dispatch, getState) {
@@ -9,7 +9,7 @@ export function appInitialized() {
 }
 
 export function changeAppRoot(root) {
-    return {type: types.ROOT_CHANGED, root: root};
+    return {type: ROOT_CHANGED, root: root};
 }
 
 export function login() {

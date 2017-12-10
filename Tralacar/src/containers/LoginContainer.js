@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     StyleSheet,
-    Image
-  } from 'react-native';
-import {connect} from 'react-redux';
-// import {LoginButton, AccessToken} from 'react-native-fbsdk';
+    Image,
+} from 'react-native';
+import { connect } from 'react-redux';
+import { Auth, Authenticator,  } from 'aws-amplify-react-native';
 
-import LoginButton from '../components/LoginButton';
+import MyLoginButton from '../components/LoginButton';
 import * as loginActions from '../actions/loginActions';
 
 const gif = '../assets/login_background.gif';
@@ -19,69 +19,101 @@ class LoginContainer extends Component {
         super(props);
         // console.log(props);
         this.onLoginPress = this.onLoginPress.bind(this);
+        this.onSignUpPress = this.onSignUpPress.bind(this);
         this.onMapSelect = this.onMapSelect.bind(this);
     }
 
+    componentWillMount() {
+        // Alert.alert(
+        //     'Alert Title',
+        //     'My Alert Msg',
+        //     [
+        //       {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+        //       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        //       {text: 'OK', onPress: () => console.log('OK Pressed')},
+        //     ],
+        //     { cancelable: false }
+        //   )
+        // Auth.currentUser()
+        //     .then(user => {
+        //     const state = user ? 'signedIn' : 'signIn';
+        //     console.log("User state is ", state);
+        // })
+        //     .catch(err => console.log(err));
+    }
+
     componentWillUnmount() {
+        // Auth.currentUser().then(user => {
+        //     const state = user ? 'signedIn' : 'signIn';
+        //     console.log("User state is ", state);
+        // }).catch(err => logger.error(err));
         console.log('Component-Lifecycle', 'componentWillUnmount', 'LoginContainer');
+    }
+
+    handleAuthStateChange() {
+        console.log("HANDLING AUTH STATE CHANGE");
     }
 
     render() {
         const resizeMode = 'cover';
         return (
-            
-            <View 
-                style={styles.view}>
+
+            <View
+                style={styles.imageContainer}>
                 <Image
-                    style={{width: '100%',resizeMode: resizeMode }}
-                    source={ require('./../assets/login_background.gif') }
-                />
-                {/* <View>
-        <LoginButton
-        //   publishPermissions={[]}
-          onLoginFinished={
-            (error, result) => {
-              if (error) {
-                alert("login has error: " + result.error);
-              } else if (result.isCancelled) {
-                alert("login is cancelled.");
-              } else {
-                AccessToken.getCurrentAccessToken().then(
-                  (data) => {
-                    alert(data.accessToken.toString())
-                  }
-                )
-              }
-            }
-          }
-          onLogoutFinished={() => alert("logout.")}/>
-      </View> */}
-                <View
-                    style={styles.button}>
-                    <LoginButton 
-                        text="Open map selector"
-                        backgroundColor='#1e84dd'
-                        handlePress={this.onMapSelect}>
-                    </LoginButton>
-                </View>
-                <View
-                    style={styles.button}>
-                    <LoginButton
-                        text='Login'
-                        backgroundColor='#1fdd55'
-                        handlePress={this.onLoginPress}>
-                    </LoginButton>
-                </View>
+                    style={{ width: '100%', resizeMode: resizeMode, flex: 1 }}
+                    source={ require('./../assets/login_background.gif')}>
+                    <View
+                        style={styles.buttonContainer}>
+                        <MyLoginButton
+                            text='Login'
+                            backgroundColor='#1fdd55'
+                            handlePress={this.onLoginPress}/>
+                        <MyLoginButton
+                            text='Sign Up'
+                            backgroundColor='#424242'
+                            handlePress={this.onSignUpPress}/>
+                    </View>
+                </Image>
+
             </View>
         );
     }
 
+    onSignUpPress() {
+        console.log("signing up");
+        this.props.navigator.showModal({
+            screen: 'SignUpContainer',
+            title: 'Sign Up', 
+            animationType: 'fade',
+            navigatorStyle: {
+                navBarTextFontBold: true,
+                navBarTextFontFamily: 'normal',
+                navBarBackgroundColor: '#424242',
+                navBarTextFontSize: 20,
+                navBarTextColor: '#FFFFFF',
+                navBarTitleTextCentered: true,
+                topBarElevationShadowEnabled: true,
+            },
+            navigatorButtons: {
+                leftButtons: [ {} ]
+            },
+        });
+    }
+
     onLoginPress() {
-        this.props.dispatch(loginActions.login());
-        // this.props.navigator.showModal({
-        //     screen: 'MapSelectContainer',
-        //     title: 'MapSelect'
-        // });
+        Auth.signIn("razvanescu", "razvanescu12")
+            .then(user => {
+                console.log("The user is ", user);
+                Auth.currentAuthenticatedUser()
+                    .then(user => {
+                        console.log("Current authenticated user is ", user);
+                    })
+                    .catch(err => console.log("ERROR IS ", err));
+                this.props.dispatch(loginActions.login());
+            })
+            .catch(err => console.log(err));
+        
     }
 
     onMapSelect() {
@@ -95,21 +127,28 @@ class LoginContainer extends Component {
 }
 
 const styles = StyleSheet.create({
-    view: {
+    imageContainer: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        alignItems: 'stretch',
+        // flexDirection: 'column',
+        // justifyContent: 'center',
         backgroundColor: '#1b1b1b'
     },
-    button: {
-        marginBottom: 0,
-        marginTop: 0,
+    buttonContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        // justifyContent: 'space-around',
+        alignItems: 'flex-end',
+        position: 'absolute',
+        bottom: 0,
+        // marginBottom: 0,
+        // marginTop: 0,
     }
 });
 
 function mapStateToProps(state) {
     return {
     };
-  }
+}
 
 export default connect(mapStateToProps)(LoginContainer);

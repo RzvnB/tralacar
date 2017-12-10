@@ -1,4 +1,4 @@
-import * as types from './actionTypes';
+import { START_POINT_CHANGED, END_POINT_CHANGED } from './actionTypes';
 
 
 export function updateStartPoint(coords) {
@@ -8,7 +8,7 @@ export function updateStartPoint(coords) {
 }
 
 export function _updateStartPoint(coords) {
-    return {type: types.START_POINT_CHANGED, startPoint: coords};
+    return {type: START_POINT_CHANGED, startPoint: coords};
 }
 
 export function updateEndPoint(coords) {
@@ -18,5 +18,5 @@ export function updateEndPoint(coords) {
 }
 
 export function _updateEndPoint(coords) {
-    return {type: types.END_POINT_CHANGED, endPoint: coords};
+    return {type: END_POINT_CHANGED, endPoint: coords};
 }

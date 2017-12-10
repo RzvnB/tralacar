@@ -5,12 +5,21 @@ import {
     Text
 } from 'react-native';
 import {connect} from 'react-redux';
+import { Auth } from 'aws-amplify-react-native';
 
 
 class HomeContainer extends Component {
     
     constructor(props) {
         super(props);
+    }
+
+    componentWillMount() {
+        // Auth.currentAuthenticatedUser()
+        //     .then(user => {
+        //         console.log("Current authenticated user is ", user);
+        //     })  
+        //     .catch(err => console.log(err))
     }
 
     componentWillUnmount() {

@@ -3,12 +3,17 @@ import {createStore, applyMiddleware, combineReducers} from "redux";
 import { Provider } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
 import thunk from "redux-thunk";
+import Amplify, { withAuthenticator } from 'aws-amplify-react-native';
+
 
 import { registerContainers } from './containers';
 // import configureStore from './store/configureStore';
 import * as reducers from "./reducers";
 import * as appActions from "./actions/loginActions";
+import aws_exports from './aws-exports';
 
+Amplify.configure(aws_exports);
+console.disableYellowBox = true;
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);
@@ -16,8 +21,8 @@ const store = createStoreWithMiddleware(reducer);
 
 registerContainers(store, Provider);
 
-export default class App {
-    constructor() {
+class App {
+    constructor(props) {
         console.log(appActions.appInitialized);
         store.subscribe(this.onStoreUpdate.bind(this));
         store.dispatch(appActions.appInitialized());
@@ -115,3 +120,6 @@ export default class App {
         }
     }
 }
+
+// export default withAuthenticator(App);
+export default App;
