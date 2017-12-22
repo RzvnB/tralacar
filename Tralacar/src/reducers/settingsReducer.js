@@ -1,4 +1,4 @@
-import { DRIVER_TOGGLED, START_POINT_CHANGED, END_POINT_CHANGED } from '../actions/actionTypes';
+import { API_FETCH_USER_SETTINGS, DRIVER_TOGGLED, START_POINT_CHANGED, END_POINT_CHANGED } from '../actions/actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
@@ -16,16 +16,35 @@ const initialState = Immutable({
 
 export default function settingsReducer(state = initialState, action = {}) {
   switch (action.type) {
+    case API_FETCH_USER_SETTINGS:
+        var newDriverMode = action.driverMode;
+        var newThumbColor = newDriverMode ? '#1fdd55' : '#ffffff';
+        console.log("init actions is ", action);
+        const newStartPoint = {
+            lat: action.startPoint[0],
+            long: action.startPoint[1]
+        }
+        const newEndPoint = {
+            lat: action.endPoint[0],
+            long: action.endPoint[1]
+        }
+        return state.merge({
+            driverMode: newDriverMode,
+            thumbColor: newThumbColor,
+            startPoint: newStartPoint,
+            endPoint: newEndPoint,
+            thumbColor: newThumbColor
+        });
     case DRIVER_TOGGLED:
-        const newDriverMode = !state.driverMode;
-        const newThumbColor = newDriverMode ? '#1fdd55' : '#ffffff';
+        var newDriverMode = !state.driverMode;
+        var newThumbColor = newDriverMode ? '#1fdd55' : '#ffffff';
         return state.merge({
             driverMode: newDriverMode,
             thumbColor: newThumbColor
         });
     case START_POINT_CHANGED:
-        // console.log("handling start point changed");
-        // console.log("new starting point " + action.startPoint.lat + " | " + action.startPoint.long);
+        console.log("handling start point changed");
+        console.log("new starting point " + action.startPoint.lat + " | " + action.startPoint.long);
         return state.merge({
             startPoint: action.startPoint
         });

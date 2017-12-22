@@ -9,6 +9,6 @@ export const SIGN_UP_FAILURE = 'example.app.SIGN_UP_FAILURE';
 export const USERNAME_CHANGED = 'example.app.USERNAME_CHANGED';
 export const PASSWORD_CHANGED = 'example.app.PASSWORD_CHANGED';
 export const EMAIL_CHANGED = 'example.app.EMAIL_CHANGED';
-
+export const API_FETCH_USER_SETTINGS = 'example.app.API_FETCH_USER_SETTINGS';
 
 // export const START_CHANGED = ''

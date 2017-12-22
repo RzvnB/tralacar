@@ -1,4 +1,6 @@
-import { ROOT_CHANGED } from './actionTypes';
+import { API } from 'aws-amplify-react-native';
+
+import { ROOT_CHANGED, API_FETCH_USER_SETTINGS } from './actionTypes';
 
 export function appInitialized() {
     return async function(dispatch, getState) {
@@ -12,9 +14,33 @@ export function changeAppRoot(root) {
     return {type: ROOT_CHANGED, root: root};
 }
 
+export function initializeUserSettings(driverMode, startPoint, endPoint) {
+    return {type: API_FETCH_USER_SETTINGS, driverMode: driverMode, startPoint: startPoint, endPoint: endPoint};
+}
+
 export function login() {
-    return async function(dispatch, getState) {
+    return (dispatch, getState) => {
         // login logic would go here, and when it's done, we switch app roots
-        dispatch(changeAppRoot('after-login'));
+        const apiName = 'userProfile';
+        const path = '/create';
+        // const myInit = {
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // }
+        API.get(apiName, path).then(response => {
+            console.log("Userprofile create response is ", response);
+            const res = JSON.parse(response.res)
+            const {
+                drivingMode,
+                startPoint,
+                endPoint
+            } = res
+            dispatch(changeAppRoot('after-login'));
+            dispatch(initializeUserSettings(drivingMode == 'true', startPoint, endPoint))
+        })
+           .catch(err => {
+            console.log(err);
+        })
     };
 }

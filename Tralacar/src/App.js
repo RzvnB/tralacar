@@ -3,7 +3,7 @@ import {createStore, applyMiddleware, combineReducers} from "redux";
 import { Provider } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
 import thunk from "redux-thunk";
-import Amplify, { withAuthenticator } from 'aws-amplify-react-native';
+import Amplify from 'aws-amplify-react-native';
 
 
 import { registerContainers } from './containers';

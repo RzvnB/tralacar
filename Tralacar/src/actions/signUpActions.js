@@ -11,7 +11,7 @@ import {
 export function signUp() {
     return (dispatch, getState) => {
         const { username, password, email } = getState().signUpReducer;
-        let state = getState();
+        // let state = getState();
         console.log("The state is ", state);
         Auth.signUp(username, password, email, false)
             .then(data => {

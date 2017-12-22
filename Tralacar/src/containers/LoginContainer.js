@@ -102,14 +102,14 @@ class LoginContainer extends Component {
     }
 
     onLoginPress() {
-        Auth.signIn("razvanescu", "razvanescu12")
+        Auth.signIn("razvan111", "razvan111")
             .then(user => {
                 console.log("The user is ", user);
-                Auth.currentAuthenticatedUser()
-                    .then(user => {
-                        console.log("Current authenticated user is ", user);
-                    })
-                    .catch(err => console.log("ERROR IS ", err));
+                // Auth.currentAuthenticatedUser()
+                //     .then(user => {
+                //         console.log("Current authenticated user is ", user);
+                //     })
+                //     .catch(err => console.log("ERROR IS ", err));
                 this.props.dispatch(loginActions.login());
             })
             .catch(err => console.log(err));

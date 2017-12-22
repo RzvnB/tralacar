@@ -20,6 +20,11 @@ class HomeContainer extends Component {
         //         console.log("Current authenticated user is ", user);
         //     })  
         //     .catch(err => console.log(err))
+        Auth.currentAuthenticatedUser()
+            .then(user => {
+                console.log("Current authenticated user is ", user);
+            })
+            .catch(err => console.log("ERROR IS ", err));
     }
 
     componentWillUnmount() {
