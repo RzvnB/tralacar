@@ -66,13 +66,13 @@ class LoginContainer extends Component {
                     <View
                         style={styles.buttonContainer}>
                         <MyLoginButton
+                            text='Sign Up'
+                            backgroundColor='#1fa7dd'
+                            handlePress={this.onSignUpPress}/>
+                        <MyLoginButton
                             text='Login'
                             backgroundColor='#1fdd55'
                             handlePress={this.onLoginPress}/>
-                        <MyLoginButton
-                            text='Sign Up'
-                            backgroundColor='#424242'
-                            handlePress={this.onSignUpPress}/>
                     </View>
                 </Image>
 
@@ -87,9 +87,10 @@ class LoginContainer extends Component {
             title: 'Sign Up', 
             animationType: 'fade',
             navigatorStyle: {
+                navBarHidden: true,
                 navBarTextFontBold: true,
                 navBarTextFontFamily: 'normal',
-                navBarBackgroundColor: '#424242',
+                navBarBackgroundColor: '#2c2c2c',
                 navBarTextFontSize: 20,
                 navBarTextColor: '#FFFFFF',
                 navBarTitleTextCentered: true,
@@ -102,15 +103,10 @@ class LoginContainer extends Component {
     }
 
     onLoginPress() {
-        Auth.signIn("razvan111", "razvan111")
+        Auth.signIn("razvan555", "razvan555")
             .then(user => {
                 console.log("The user is ", user);
-                // Auth.currentAuthenticatedUser()
-                //     .then(user => {
-                //         console.log("Current authenticated user is ", user);
-                //     })
-                //     .catch(err => console.log("ERROR IS ", err));
-                this.props.dispatch(loginActions.login());
+                this.props.dispatch(loginActions.login(user.username));
             })
             .catch(err => console.log(err));
         

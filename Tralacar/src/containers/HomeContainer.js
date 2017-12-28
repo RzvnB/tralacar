@@ -5,7 +5,10 @@ import {
     Text
 } from 'react-native';
 import {connect} from 'react-redux';
-import { Auth } from 'aws-amplify-react-native';
+import { Auth, API } from 'aws-amplify-react-native';
+
+import DriversList from '../components/DriversList';
+import * as homeActions from '../actions/homeActions';
 
 
 class HomeContainer extends Component {
@@ -14,17 +17,9 @@ class HomeContainer extends Component {
         super(props);
     }
 
-    componentWillMount() {
-        // Auth.currentAuthenticatedUser()
-        //     .then(user => {
-        //         console.log("Current authenticated user is ", user);
-        //     })  
-        //     .catch(err => console.log(err))
-        Auth.currentAuthenticatedUser()
-            .then(user => {
-                console.log("Current authenticated user is ", user);
-            })
-            .catch(err => console.log("ERROR IS ", err));
+    componentDidMount() {
+        console.log('Component-Lifecycle', 'componentDidMount', 'HomeContainer');
+        this.props.dispatch(homeActions.fetchDrivers());
     }
 
     componentWillUnmount() {
@@ -32,21 +27,93 @@ class HomeContainer extends Component {
     }
 
     render() {
-        if (this.props.driverMode) {
-            return (
+        const list = [
+            {
+              name: 'Amy Farha',
+              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+              subtitle: 'Vice President',
+              space: '1/5',
+              icon: 'room'
+            },
+            {
+              name: 'Chris Jackson',
+              avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+              subtitle: 'Vice Chairman',
+              space: '0/5',
+              icon: 'room'
+            },
+            {
+                name: 'Chris Jackson',
+                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                subtitle: 'Vice Chairman',
+                space: '2/5',
+                icon: 'room'
+            },
+            {
+                name: 'Chris Jackson',
+                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                subtitle: 'Vice Chairman',
+                space: '4/5',
+                icon: 'room'
+            },
+            {
+                name: 'Chris Jackson',
+                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                subtitle: 'Vice Chairman',
+                space: '4/5',
+                icon: 'room'
+            },
+            {
+                name: 'Chris Jackson',
+                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                subtitle: 'Vice Chairman',
+                space: '2/5',
+                icon: 'room'
+            },
+            {
+                name: 'Chris Jackson',
+                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                subtitle: 'Vice Chairman',
+                space: '3/5',
+                icon: 'room'
+            },
+            {
+                name: 'Chris Jackson',
+                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                subtitle: 'Vice Chairman',
+                space: '4/5',
+                icon: 'room'
+            },
+            {
+                name: 'Chris Jackson',
+                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                subtitle: 'Vice Chairman',
+                space: '1/5',
+                icon: 'room'
+            },
+        ]
+        return (
+            <View style={styles.view}>
+                <DriversList 
+                    list={this.props.driversList} 
+                />
+            </View>
+        )
+        // if (this.props.driverMode) {
+        //     return (
                 
-                <View style={styles.view}>
-                    <Text style={{color: 'white'}}>Driver mode enabled</Text>
-                </View>
-            );
-        } else {
-            return (
+        //         <View style={styles.view}>
+        //             <Text style={{color: 'white'}}>Driver mode enabled</Text>
+        //         </View>
+        //     );
+        // } else {
+        //     return (
                 
-                <View style={styles.view}>
-                    <Text style={{color: 'white'}}>Driver mode disabled</Text>
-                </View>
-            ); 
-        }
+        //         <View style={styles.view}>
+        //             <Text style={{color: 'white'}}>Driver mode disabled</Text>
+        //         </View>
+        //     ); 
+        // }
     }
 
 }
@@ -64,8 +131,10 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
     // console.log("Home container state is ", state);
     const { driverMode } = state.settingsReducer;
+    const { driversList } = state.homeReducer;
     return {
-        driverMode
+        driverMode,
+        driversList
     };
   }
 

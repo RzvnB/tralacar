@@ -1,22 +1,31 @@
-import { Auth } from 'aws-amplify-react-native';
+import { Auth, API } from 'aws-amplify-react-native';
 
 import { 
     SIGN_UP_FAILURE, 
     SIGN_UP_SUCCESS, 
     USERNAME_CHANGED,
     PASSWORD_CHANGED,
-    EMAIL_CHANGED
+    EMAIL_CHANGED,
+    FULLNAME_CHANGED
 } from './actionTypes';
 
 export function signUp() {
     return (dispatch, getState) => {
-        const { username, password, email } = getState().signUpReducer;
+        const { username, password, email, fullname } = getState().signUpReducer;
         // let state = getState();
-        console.log("The state is ", state);
+        // console.log("The state is ", state);
         Auth.signUp(username, password, email, false)
             .then(data => {
                 console.log("Data after success sign-up ", data);
                 dispatch(_signedUp(SIGN_UP_SUCCESS));
+                // const apiName = 'userProfile';
+                // const path = '/create/' + fullname;
+                // API.get(apiName, path).then(response => {
+                //     console.log("Userprofile create response is ", response);
+                // })
+                //    .catch(err => {
+                //     console.log(err);
+                // })
             })
             .catch(err => {
                 console.log("Error after failed sign-up ", err);
@@ -57,4 +66,14 @@ export function emailChanged(email) {
 
 export function _emailChanged(email) {
     return { type: EMAIL_CHANGED, newEmail: email }
+}
+
+export function fullnameChanged(fullname) {
+    return async function(dispatch, getState) {
+        dispatch(_emailChanged(fullname));
+    }
+}
+
+export function _fullnameChanged(fullname) {
+    return { type: EMAIL_CHANGED, newFullname: fullname }
 }

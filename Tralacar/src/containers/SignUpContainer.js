@@ -5,7 +5,8 @@ import {
     Image,
     Text,
     BackHandler,
-    Alert
+    Alert,
+    KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
 import { FormLabel, FormInput } from 'react-native-elements'
@@ -20,6 +21,7 @@ class SignUpContainer extends Component {
         this.changeUsername = this.changeUsername.bind(this);
         this.changePassword = this.changePassword.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
+        this.changeFullname = this.changeFullname.bind(this);
         this.signUp = this.signUp.bind(this);
     }
 
@@ -46,6 +48,10 @@ class SignUpContainer extends Component {
 
     changeEmail(email) {
         this.props.dispatch(signUpActions.emailChanged(email));
+    }
+
+    changeFullname(fullname) {
+        this.props.dispatch(signUpActions.fullnameChanged(fullname));
     }
 
     signUp() {
@@ -75,14 +81,17 @@ class SignUpContainer extends Component {
         }
         return (
             <View style= {{backgroundColor: 'white', flex: 1}}>
-                <View>
+                <KeyboardAvoidingView
+                    behavior="position"> 
                     <FormLabel>Username</FormLabel>
                     <FormInput onChangeText={this.changeUsername}/>
                     <FormLabel>Password</FormLabel>
                     <FormInput onChangeText={this.changePassword}/>
                     <FormLabel>Email</FormLabel>
                     <FormInput onChangeText={this.changeEmail}/>
-                </View>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormInput onChangeText={this.cnageFullname}/>
+                </KeyboardAvoidingView>
                 <View
                     style={styles.buttonContainer}>
                     <MyLoginButton

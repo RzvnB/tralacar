@@ -18,23 +18,19 @@ export function initializeUserSettings(driverMode, startPoint, endPoint) {
     return {type: API_FETCH_USER_SETTINGS, driverMode: driverMode, startPoint: startPoint, endPoint: endPoint};
 }
 
-export function login() {
+export function login(username) {
     return (dispatch, getState) => {
         // login logic would go here, and when it's done, we switch app roots
         const apiName = 'userProfile';
-        const path = '/create';
-        // const myInit = {
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // }
+        const path = '/create/' + username;
         API.get(apiName, path).then(response => {
             console.log("Userprofile create response is ", response);
             const res = JSON.parse(response.res)
+            console.log("Parsed res is ", res)
             const {
                 drivingMode,
                 startPoint,
-                endPoint
+                endPoint,
             } = res
             dispatch(changeAppRoot('after-login'));
             dispatch(initializeUserSettings(drivingMode == 'true', startPoint, endPoint))

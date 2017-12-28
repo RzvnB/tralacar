@@ -49,7 +49,7 @@ class App {
                             navBarHidden: true,
                             navBarTextFontBold: false,
                             navBarTextFontFamily: 'normal',
-                            navBarBackgroundColor: 'gray',
+                            navBarBackgroundColor: '#474747',
                             navBarTextFontSize: 19,
                             navBarTextColor: '#FFFFFF',
                             navBarTitleTextCentered: true,
@@ -72,11 +72,11 @@ class App {
                             navigatorStyle: {
                                 navBarTextFontBold: true,
                                 navBarTextFontFamily: 'normal',
-                                navBarBackgroundColor: '#424242',
+                                navBarBackgroundColor: '#2c2c2c',
                                 navBarTextFontSize: 20,
                                 navBarTextColor: '#FFFFFF',
                                 navBarTitleTextCentered: true,
-                                topBarElevationShadowEnabled: true
+                                topBarElevationShadowEnabled: false
                             },
                             navigatorButtons: {}
                         },
@@ -92,7 +92,7 @@ class App {
                                 navBarTranslucent: false,
                                 navBarTextFontBold: true,
                                 navBarTextFontFamily: 'normal',
-                                navBarBackgroundColor: '#424242',
+                                navBarBackgroundColor: '#2c2c2c',
                                 navBarTextFontSize: 20,
                                 navBarTextColor: '#FFFFFF',
                                 navBarTitleTextCentered: true,
@@ -103,7 +103,7 @@ class App {
                     ],
                     appStyle: {
                         forceTitlesDisplay: true,
-                        tabBarBackgroundColor: '#424242',
+                        tabBarBackgroundColor: '#2c2c2c',
                         tabBarButtonColor: '#8a8a8a',
                         tabBarSelectedButtonColor: '#ffffff',
                         bottomTabBadgeTextColor: 'green',

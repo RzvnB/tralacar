@@ -1,4 +1,9 @@
-import { API_FETCH_USER_SETTINGS, DRIVER_TOGGLED, START_POINT_CHANGED, END_POINT_CHANGED } from '../actions/actionTypes';
+import { 
+    API_FETCH_USER_SETTINGS, 
+    DRIVER_TOGGLED, 
+    START_POINT_CHANGED, 
+    END_POINT_CHANGED 
+} from '../actions/actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({

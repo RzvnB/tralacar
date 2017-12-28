@@ -1,10 +1,18 @@
-import { SIGN_UP_SUCCESS, SIGN_UP_FAILURE, USERNAME_CHANGED, PASSWORD_CHANGED, EMAIL_CHANGED } from '../actions/actionTypes';
+import { 
+    SIGN_UP_SUCCESS, 
+    SIGN_UP_FAILURE, 
+    USERNAME_CHANGED, 
+    PASSWORD_CHANGED, 
+    EMAIL_CHANGED,
+    FULLNAME_CHANGED
+} from '../actions/actionTypes';
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
     username: '',
     password: '',
     email: '',
+    fullname:'',
     signUpSuccess: undefined,
 });
 
@@ -36,6 +44,10 @@ export default function signUpReducer(state = initialState, action = {}) {
         case EMAIL_CHANGED:
             return state.merge({
                 email: action.newEmail
+            });
+        case FULLNAME_CHANGED:
+            return state.merge({
+                fullname: action.newFullname
             });
         default:
             return state;
