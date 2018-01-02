@@ -6,10 +6,12 @@ import {
     Text,
     BackHandler,
     Alert,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Keyboard
 } from 'react-native';
 import { connect } from 'react-redux';
-import { FormLabel, FormInput } from 'react-native-elements'
+import { FormLabel, FormInput, Icon } from 'react-native-elements'
+
 
 import MyLoginButton from '../components/LoginButton';
 import * as signUpActions from '../actions/signUpActions';
@@ -26,6 +28,8 @@ class SignUpContainer extends Component {
     }
 
     componentWillMount() {
+        // this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        // this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
         BackHandler.addEventListener('hardwareBackPress', function() {
             this.props.navigator.dismissModal({
                 animationType: 'fade'
@@ -34,9 +38,18 @@ class SignUpContainer extends Component {
     }
 
     componentWillUnmount() {
+        // this.keyboardDidShowListener.remove();
+        // this.keyboardDidHideListener.remove();
         BackHandler.removeEventListener('hardwareBackPress');
     }
 
+    _keyboardDidShow () {
+        alert('Keyboard Shown');
+    }
+    
+    _keyboardDidHide () {
+        alert('Keyboard Hidden');
+    }
     
     changeUsername(username) {
         this.props.dispatch(signUpActions.usernameChanged(username));
@@ -80,25 +93,83 @@ class SignUpContainer extends Component {
             )
         }
         return (
-            <View style= {{backgroundColor: 'white', flex: 1}}>
+            <View style= {{backgroundColor: '#beb7cc', flex: 1}}>
                 <KeyboardAvoidingView
-                    behavior="position"> 
-                    <FormLabel>Username</FormLabel>
-                    <FormInput onChangeText={this.changeUsername}/>
-                    <FormLabel>Password</FormLabel>
-                    <FormInput onChangeText={this.changePassword}/>
-                    <FormLabel>Email</FormLabel>
-                    <FormInput onChangeText={this.changeEmail}/>
-                    <FormLabel>Full Name</FormLabel>
-                    <FormInput onChangeText={this.cnageFullname}/>
+                    behavior="position"
+                    style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}>
+                    <View
+                        style={{flex: 1,
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center'}}
+                    >
+                        <View
+                            style={{flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center'}}
+                        > 
+                            <Icon
+                                type='entypo'
+                                name='user'
+                                containerStyle={{marginTop: 15}}
+                            />
+                            <FormLabel labelStyle={{fontSize: 17}}>USERNAME</FormLabel>
+                        </View>
+                        <FormInput 
+                            containerStyle={{width: '70%',  marginLeft: 0, marginRight: 0}}
+                            onChangeText={this.changeUsername}/>
+                        <View
+                            style={{flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center'}}
+                        >
+                            <Icon
+                                type='entypo'
+                                name='lock'
+                                containerStyle={{marginTop: 15}}
+                            />
+                            <FormLabel labelStyle={{fontSize: 17}}>PASSWORD</FormLabel>
+                        </View>
+                        <FormInput 
+                            secureTextEntry={true}
+                            containerStyle={{width: '70%',  marginLeft: 0, marginRight: 0}}
+                            onChangeText={this.changePassword}/>
+                        <View
+                            style={{flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center'}}
+                        >
+                            <Icon
+                                type='entypo'
+                                name='email'
+                                containerStyle={{marginTop: 15}}
+                            />
+                            <FormLabel labelStyle={{fontSize: 17}}>EMAIL</FormLabel>
+                        </View>
+                        <FormInput 
+                            containerStyle={{width: '70%',  marginLeft: 0, marginRight: 0}}
+                            onChangeText={this.changeEmail}/>
+                    </View>
                 </KeyboardAvoidingView>
                 <View
                     style={styles.buttonContainer}>
                     <MyLoginButton
-                        text='Sign Up'
-                        backgroundColor='#1fdd55'
+                        text='SIGN UP'
+                        backgroundColor='#e04876'
+                        large={true}
+                        raised={true}
+                        fontSize={22}
+                        fontWeight={'bold'}
                         handlePress={this.signUp}
-                        containerStyle={{ width: '100%'}}/>
+                        containerStyle={{width: '75%', marginTop: 25, marginBottom: 10}}/>
                 </View>
             </View>
         );
@@ -109,11 +180,9 @@ class SignUpContainer extends Component {
 const styles = StyleSheet.create({
     buttonContainer: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'flex-end',
-        marginBottom: 0,
-        marginTop: 0,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 });
 

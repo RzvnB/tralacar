@@ -3,15 +3,17 @@ import {
     View,
     StyleSheet,
     Image,
+    KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Auth, Authenticator,  } from 'aws-amplify-react-native';
+import { Auth, Authenticator  } from 'aws-amplify-react-native';
+import { FormLabel, FormInput, Icon } from 'react-native-elements'
 
 import MyLoginButton from '../components/LoginButton';
 import * as loginActions from '../actions/loginActions';
 
 const gif = '../assets/login_background.gif';
-
+const backgroundImage = '../assets/city_traffic_tint.jpg';
 
 class LoginContainer extends Component {
 
@@ -21,6 +23,8 @@ class LoginContainer extends Component {
         this.onLoginPress = this.onLoginPress.bind(this);
         this.onSignUpPress = this.onSignUpPress.bind(this);
         this.onMapSelect = this.onMapSelect.bind(this);
+        this.changeUsername = this.changeUsername.bind(this);
+        this.changePassword = this.changePassword.bind(this);
     }
 
     componentWillMount() {
@@ -43,15 +47,15 @@ class LoginContainer extends Component {
     }
 
     componentWillUnmount() {
-        // Auth.currentUser().then(user => {
-        //     const state = user ? 'signedIn' : 'signIn';
-        //     console.log("User state is ", state);
-        // }).catch(err => logger.error(err));
         console.log('Component-Lifecycle', 'componentWillUnmount', 'LoginContainer');
     }
 
-    handleAuthStateChange() {
-        console.log("HANDLING AUTH STATE CHANGE");
+    changeUsername(username) {
+        this.props.dispatch(loginActions.usernameChanged(username));
+    }
+
+    changePassword(password) {
+        this.props.dispatch(loginActions.passwordChanged(password));
     }
 
     render() {
@@ -60,21 +64,71 @@ class LoginContainer extends Component {
 
             <View
                 style={styles.imageContainer}>
-                <Image
-                    style={{ width: '100%', resizeMode: resizeMode, flex: 1 }}
-                    source={ require('./../assets/login_background.gif')}>
+                <KeyboardAvoidingView
+                    behavior="position"
+                    style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}>
                     <View
-                        style={styles.buttonContainer}>
-                        <MyLoginButton
-                            text='Sign Up'
-                            backgroundColor='#1fa7dd'
-                            handlePress={this.onSignUpPress}/>
-                        <MyLoginButton
-                            text='Login'
-                            backgroundColor='#1fdd55'
-                            handlePress={this.onLoginPress}/>
+                        style={{flex: 1,
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center'}}
+                    >
+                        <View
+                            style={{flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center'}}
+                        > 
+                            <Icon
+                                type='entypo'
+                                name='user'
+                                containerStyle={{marginTop: 15}}
+                            />
+                            <FormLabel labelStyle={{fontSize: 17}}>USERNAME</FormLabel>
+                        </View>
+                        <FormInput 
+                            containerStyle={{width: '70%',  marginLeft: 0, marginRight: 0}}
+                            onChangeText={this.changeUsername}/>
+                        <View
+                            style={{flex: 1,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center'}}
+                        >
+                            <Icon
+                                type='entypo'
+                                name='lock'
+                                containerStyle={{marginTop: 15}}
+                            />
+                            <FormLabel labelStyle={{fontSize: 17}}>PASSWORD</FormLabel>
+                        </View>
+                        <FormInput 
+                            secureTextEntry={true}
+                            containerStyle={{width: '70%',  marginLeft: 0, marginRight: 0}}
+                            onChangeText={this.changePassword}/>
                     </View>
-                </Image>
+                </KeyboardAvoidingView>
+                <View
+                    style={styles.buttonContainer}>
+                    <MyLoginButton
+                        large={true}
+                        text='LOG IN'
+                        fontSize={22}
+                        fontWeight={'bold'}
+                        raised={true}
+                        backgroundColor='#1fdd55'
+                        handlePress={this.onLoginPress}/>
+                    <MyLoginButton
+                        text='SIGN UP'
+                        backgroundColor='#e04876'
+                        handlePress={this.onSignUpPress}
+                        containerStyle={{width: '40%', marginTop: 25, marginBottom: 10}}/>
+                </View>
 
             </View>
         );
@@ -103,7 +157,7 @@ class LoginContainer extends Component {
     }
 
     onLoginPress() {
-        Auth.signIn("razvan555", "razvan555")
+        Auth.signIn(this.props.username, this.props.password)
             .then(user => {
                 console.log("The user is ", user);
                 this.props.dispatch(loginActions.login(user.username));
@@ -125,25 +179,21 @@ class LoginContainer extends Component {
 const styles = StyleSheet.create({
     imageContainer: {
         flex: 1,
-        alignItems: 'stretch',
-        // flexDirection: 'column',
-        // justifyContent: 'center',
-        backgroundColor: '#1b1b1b'
+        backgroundColor: '#beb7cc'
     },
     buttonContainer: {
         flex: 1,
-        flexDirection: 'row',
-        // justifyContent: 'space-around',
-        alignItems: 'flex-end',
-        position: 'absolute',
-        bottom: 0,
-        // marginBottom: 0,
-        // marginTop: 0,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
 function mapStateToProps(state) {
+    const { username, password } = state.loginReducer;
     return {
+        username,
+        password
     };
 }
 

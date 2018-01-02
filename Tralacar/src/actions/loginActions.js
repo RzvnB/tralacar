@@ -1,6 +1,11 @@
 import { API } from 'aws-amplify-react-native';
 
-import { ROOT_CHANGED, API_FETCH_USER_SETTINGS } from './actionTypes';
+import { 
+    ROOT_CHANGED, 
+    API_FETCH_USER_SETTINGS, 
+    LOGIN_PASSWORD_CHANGED,
+    LOGIN_USERNAME_CHANGED
+} from './actionTypes';
 
 export function appInitialized() {
     return async function(dispatch, getState) {
@@ -39,4 +44,24 @@ export function login(username) {
             console.log(err);
         })
     };
+}
+
+export function usernameChanged(username) {
+    return async function(dispatch, getState) {
+        dispatch(_usernameChanged(username));
+    }
+}
+
+function _usernameChanged(username) {
+    return { type: LOGIN_USERNAME_CHANGED, newUsername: username }
+}
+
+export function passwordChanged(password) {
+    return async function(dispatch, getState) {
+        dispatch(_passwordChanged(password));
+    }
+}
+
+function _passwordChanged(password) {
+    return { type: LOGIN_PASSWORD_CHANGED, newPassword: password }
 }

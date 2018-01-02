@@ -5,8 +5,12 @@ import { Button } from 'react-native-elements'
 
 const MyLoginButton = (props) => (
     <Button
-        containerViewStyle={{width: '50%', marginLeft: 0, marginRight: 0, ...props.containerStyle}}
-        large
+        containerViewStyle={{width: '70%', marginLeft: 0, marginRight: 0, ...props.containerStyle}}
+        large={props.large}
+        raised={props.raised}
+        borderRadius={100}
+        fontSize={props.fontSize}
+        fontWeight={props.fontWeight}
         onPress={props.handlePress}
         title={props.text}
         backgroundColor={props.backgroundColor}

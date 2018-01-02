@@ -12,5 +12,7 @@ export const EMAIL_CHANGED = 'example.app.EMAIL_CHANGED';
 export const FULLNAME_CHANGED = 'example.app.FULLNAME_CHANGED';
 export const API_FETCH_USER_SETTINGS = 'example.app.API_FETCH_USER_SETTINGS';
 export const API_FETCH_DRIVERS_LIST = 'example.app.API_FETCH_DRIVERS_LIST';
+export const LOGIN_USERNAME_CHANGED = 'example.app.LOGIN_USERNAME_CHANGED';
+export const LOGIN_PASSWORD_CHANGED = 'example.app.LOGIN_PASSWORD_CHANGED';
 
 // export const START_CHANGED = ''
