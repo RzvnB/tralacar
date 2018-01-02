@@ -93,20 +93,28 @@ class SignUpContainer extends Component {
             )
         }
         return (
-            <View style= {{backgroundColor: '#beb7cc', flex: 1}}>
+            <View style= {{backgroundColor: '#D6D6D6', flex: 1}}>
                 <KeyboardAvoidingView
                     behavior="position"
                     style={{
                         flex: 1,
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        backgroundColor: '#FFFFFF',
+                        borderRadius: 25,
+                        marginLeft: 25,
+                        marginRight: 25,
+                        marginTop: 25,
+                        borderColor: '#B0AFAF',
+                        borderWidth: 0.7
                       }}>
                     <View
                         style={{flex: 1,
                             flexDirection: 'column',
                             alignItems: 'center',
-                            justifyContent: 'center'}}
+                            justifyContent: 'center',
+                            marginBottom: 25}}
                     >
                         <View
                             style={{flex: 1,

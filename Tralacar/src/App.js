@@ -29,7 +29,7 @@ class App {
     }
 
     onStoreUpdate() {
-        const {root} = store.getState().navReducer;
+        const { root } = store.getState().navReducer;
         // handle a root change
         // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
         if (this.currentRoot != root) {
@@ -60,47 +60,26 @@ class App {
                 });
                 return;
             case 'after-login':
-                Navigation.startTabBasedApp({
-                    tabs: [
-                        {
-                            label: 'Home',
-                            screen: 'HomeContainer',
-                            icon: require('./assets/home.png'),
-                            selectedIcon: require('./assets/home_selected.png'),
-                            title: 'Home',
-                            overrideBackPress: true,
-                            navigatorStyle: {
-                                navBarTextFontBold: true,
-                                navBarTextFontFamily: 'normal',
-                                navBarBackgroundColor: '#2c2c2c',
-                                navBarTextFontSize: 20,
-                                navBarTextColor: '#FFFFFF',
-                                navBarTitleTextCentered: true,
-                                topBarElevationShadowEnabled: false
-                            },
-                            navigatorButtons: {}
+                const { username } = store.getState().loginReducer;
+                Navigation.startSingleScreenApp({
+                    screen: {
+                        label: 'Home',
+                        screen: 'HomeContainer',
+                        title: 'Welcome ' + username,
+                        overrideBackPress: true,
+                        navigatorStyle: {
+                            navBarHidden: true,
+                            navBarTextFontBold: false,
+                            navBarTextFontFamily: 'sans-serif-light',
+                            navBarBackgroundColor: '#FFFFFF',
+                            navBarTextFontSize: 20,
+                            navBarTextColor: '#000000',
+                            navBarTitleTextCentered: true,
+                            topBarElevationShadowEnabled: true
                         },
-                        {
-                            label: 'Settings',
-                            screen: 'SettingsContainer',
-                            icon: require('./assets/settings.png'),
-                            selectedIcon: require('./assets/settings_selected.png'),
-                            title: 'Settings',
-                            overrideBackPress: true,
-                            navigatorStyle: {
-                                drawUnderNavBar: false,
-                                navBarTranslucent: false,
-                                navBarTextFontBold: true,
-                                navBarTextFontFamily: 'normal',
-                                navBarBackgroundColor: '#2c2c2c',
-                                navBarTextFontSize: 20,
-                                navBarTextColor: '#FFFFFF',
-                                navBarTitleTextCentered: true,
-                                topBarElevationShadowEnabled: true
-                            },
-                            navigatorButtons: {}
-                        }
-                    ],
+                        navigatorButtons: {},
+                    },
+                    
                     appStyle: {
                         forceTitlesDisplay: true,
                         tabBarBackgroundColor: '#2c2c2c',
@@ -109,10 +88,8 @@ class App {
                         bottomTabBadgeTextColor: 'green',
                         bottomTabBadgeBackgroundColor: 'black'
                     },
-                    animationType: 'slide-up'
+                    animationType: 'fade'
                 });
-                // console.log("after-login");
-                // store.dispatch(appActions.appInitialized());
                 return;
                 
             default:

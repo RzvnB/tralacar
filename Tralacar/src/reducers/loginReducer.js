@@ -5,8 +5,8 @@ import {
 import Immutable from 'seamless-immutable';
 
 const initialState = Immutable({
-    username: '',
-    password: '',
+    username: 'razvan555',
+    password: 'razvan555',
 });
 
 export default function loginReducer(state = initialState, action = {}) {

@@ -63,20 +63,29 @@ class LoginContainer extends Component {
         return (
 
             <View
-                style={styles.imageContainer}>
+                style={styles.container}>
                 <KeyboardAvoidingView
                     behavior="position"
                     style={{
                         flex: 1,
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        backgroundColor: '#FFFFFF',
+                        borderRadius: 25,
+                        marginLeft: 25,
+                        marginRight: 25,
+                        marginTop: 25,
+                        borderColor: '#B0AFAF',
+                        borderWidth: 0.7,
                       }}>
                     <View
-                        style={{flex: 1,
+                        style={{
+                            flex: 1,
                             flexDirection: 'column',
                             alignItems: 'center',
-                            justifyContent: 'center'}}
+                            justifyContent: 'center',
+                            marginBottom: 25}}
                     >
                         <View
                             style={{flex: 1,
@@ -177,9 +186,9 @@ class LoginContainer extends Component {
 }
 
 const styles = StyleSheet.create({
-    imageContainer: {
+    container: {
         flex: 1,
-        backgroundColor: '#beb7cc'
+        backgroundColor: '#D6D6D6'
     },
     buttonContainer: {
         flex: 1,
