@@ -79,19 +79,53 @@ class App {
                         },
                         navigatorButtons: {},
                     },
-                    
-                    appStyle: {
-                        forceTitlesDisplay: true,
-                        tabBarBackgroundColor: '#2c2c2c',
-                        tabBarButtonColor: '#8a8a8a',
-                        tabBarSelectedButtonColor: '#ffffff',
-                        bottomTabBadgeTextColor: 'green',
-                        bottomTabBadgeBackgroundColor: 'black'
-                    },
                     animationType: 'fade'
                 });
                 return;
-                
+            case 'driverMode':
+                Navigation.startTabBasedApp({
+                    tabs: [
+                        {
+                            label: 'Map',
+                            screen: 'DriverHomeContainer',
+                            icon: require('./assets/driver_maps.png'),
+                            title: 'Map',
+                            overrideBackPress: false,
+                            navigatorStyle: {
+                                navBarHidden: true,
+                            },
+                        },
+                        {
+                            label: 'Members',
+                            screen: 'DriverMembersContainer',
+                            icon: require('./assets/list_icon.png'),
+                            title: 'Members',
+                            overrideBackPress: false,
+                            navigatorStyle: {
+                                drawUnderNavBar: false,
+                                navBarTranslucent: false,
+                                navBarTextFontBold: true,
+                                navBarTextFontFamily: 'normal',
+                                navBarBackgroundColor: '#2c2c2c',
+                                navBarTextFontSize: 20,
+                                navBarTextColor: '#FFFFFF',
+                                navBarTitleTextCentered: true,
+                                topBarElevationShadowEnabled: true
+                            },
+                            navigatorButtons: {}
+                        }
+                    ],
+                    appStyle: {
+                        forceTitlesDisplay: true,
+                        tabBarBackgroundColor: '#FFFFFF',
+                        tabBarButtonColor: '#8a8a8a',
+                        tabBarSelectedButtonColor: '#332cfd',
+                        bottomTabBadgeTextColor: 'green',
+                        bottomTabBadgeBackgroundColor: 'black'
+                    },
+                    animationType: 'slide-up'
+                });
+                return;
             default:
                 console.error('Unknown app root');
         }

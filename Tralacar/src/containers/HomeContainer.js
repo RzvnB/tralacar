@@ -11,12 +11,14 @@ import { Card } from 'react-native-elements';
 import DriversList from '../components/DriversList';
 import MyLoginButton from '../components/LoginButton';
 import * as homeActions from '../actions/homeActions';
+import * as loginActions from '../actions/loginActions';
 
 
 class HomeContainer extends Component {
     
     constructor(props) {
         super(props);
+        this.onDriverMode = this.onDriverMode.bind(this);
     }
 
     componentDidMount() {
@@ -26,6 +28,10 @@ class HomeContainer extends Component {
 
     componentWillUnmount() {
         console.log('Component-Lifecycle', 'componentWillUnmount', 'HomeContainer');
+    }
+
+    onDriverMode() {
+        this.props.dispatch(loginActions.changeAppRoot('driverMode'));
     }
 
     render() {
@@ -79,19 +85,23 @@ class HomeContainer extends Component {
                 <View
                     style={styles.buttonContainer}>
                     <MyLoginButton
+                        text='FIND A DRIVER'
                         large={true}
-                        text='LOG IN'
                         fontSize={22}
                         fontWeight={'bold'}
                         raised={true}
-                        backgroundColor='#1fdd55'
+                        backgroundColor='#fd982c'
                         // handlePress={this.onLoginPress}
                         />
                     <MyLoginButton
-                        text='SIGN UP'
-                        backgroundColor='#e04876'
-                        // handlePress={this.onSignUpPress}
-                        containerStyle={{width: '40%', marginTop: 25, marginBottom: 10}}/>
+                        text='BE A DRIVER'
+                        large={true}
+                        fontSize={22}
+                        fontWeight={'bold'}
+                        raised={true}
+                        backgroundColor='#332cfd'
+                        handlePress={this.onDriverMode}
+                        containerStyle={{marginTop: 25, marginBottom: 10}}/>
                 </View>
             </View>
         )
